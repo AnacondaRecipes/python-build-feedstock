@@ -43,8 +43,11 @@ test:
 about:
   home: https://github.com/pypa/build
   license: MIT
+  license_family: MIT
   license_file: LICENSE
   summary: A simple, correct PEP517 package builder
+  dev_url: https://github.com/pypa/build
+  doc_url: https://pypa-build.readthedocs.io/en/stable/
 
 extra:
   recipe-maintainers:
