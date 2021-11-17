@@ -28,7 +28,7 @@ requirements:
     - importlib-metadata >=0.22  # [py<38]
     - packaging >=19.0
     - pep517 >=0.9.1
-    - toml >=1.0.0
+    - toml
 
 test:
   imports:
