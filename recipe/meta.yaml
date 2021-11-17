@@ -11,6 +11,7 @@ source:
 
 build:
   number: 0
+  skip: True  # [py<36]
   noarch: python
   entry_points:
     - python-build = build.__main__:entrypoint
@@ -18,14 +19,16 @@ build:
 
 requirements:
   host:
-    - python >3.4
+    - python
     - pip
+    - setuptools >=40.8.0
+    - wheel
   run:
-    - python >3.4
-    - importlib-metadata
-    - packaging
-    - pep517 >=0.9
-    - toml
+    - python >3.6
+    - importlib-metadata >=0.22  # [py<38]
+    - packaging >=19.0
+    - pep517 >=0.9.1
+    - toml >=1.0.0
 
 test:
   imports:
@@ -35,6 +38,7 @@ test:
     - python-build --help
   requires:
     - pip
+    - python <3.10
 
 about:
   home: https://github.com/pypa/build
