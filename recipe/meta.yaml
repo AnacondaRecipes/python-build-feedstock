@@ -11,6 +11,7 @@ source:
 
 build:
   number: 0
+  skip: True  # [py<36]
   noarch: python
   entry_points:
     - python-build = build.__main__:entrypoint
@@ -18,13 +19,15 @@ build:
 
 requirements:
   host:
-    - python >3.4
+    - python
     - pip
+    - setuptools >=40.8.0
+    - wheel
   run:
-    - python >3.4
-    - importlib-metadata
-    - packaging
-    - pep517 >=0.9
+    - python >3.6
+    - importlib-metadata >=0.22  # [py<38]
+    - packaging >=19.0
+    - pep517 >=0.9.1
     - toml
 
 test:
@@ -32,15 +35,19 @@ test:
     - build
   commands:
     - pip check
-    - python-build --help
+    - python-build --help 
   requires:
     - pip
+    - python <3.10
 
 about:
   home: https://github.com/pypa/build
   license: MIT
+  license_family: MIT
   license_file: LICENSE
   summary: A simple, correct PEP517 package builder
+  dev_url: https://github.com/pypa/build
+  doc_url: https://pypa-build.readthedocs.io/en/stable/
 
 extra:
   recipe-maintainers:
