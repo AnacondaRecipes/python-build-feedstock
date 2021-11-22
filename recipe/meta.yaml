@@ -35,7 +35,7 @@ test:
     - build
   commands:
     - pip check
-    - python-build --help
+    - python-build --help 
   requires:
     - pip
     - python <3.10
