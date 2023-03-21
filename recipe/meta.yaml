@@ -24,11 +24,11 @@ requirements:
     - wheel
     - flit-core
   run:
-    - python >3.6
-    - importlib-metadata >=0.22  # [py<38]
+    - python
     - packaging >=19.0
-    - pep517 >=0.9.1
-    - toml
+    - pyproject_hooks
+    - importlib-metadata >=0.22  # [py<38]
+    - tomli >=1.1.0  # [py<311]
 
 test:
   imports:
