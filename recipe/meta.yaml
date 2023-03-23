@@ -43,10 +43,14 @@ test:
 
 about:
   home: https://github.com/pypa/build
+  summary: A simple, correct PEP517 package builder
+  description: |
+    build manages pyproject.toml-based builds, invoking build-backend hooks 
+    as appropriate to build a distribution package. It is a simple build tool 
+    and does not perform any dependency management.
   license: MIT
   license_family: MIT
   license_file: LICENSE
-  summary: A simple, correct PEP517 package builder
   dev_url: https://github.com/pypa/build
   doc_url: https://pypa-build.readthedocs.io/en/stable/
 
