@@ -25,6 +25,7 @@ requirements:
     - flit-core
   run:
     - python
+    - colorama
     - packaging >=19.0
     - pyproject_hooks
     - importlib-metadata >=0.22  # [py<38]
