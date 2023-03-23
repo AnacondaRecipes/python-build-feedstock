@@ -39,7 +39,6 @@ test:
     - python-build --help 
   requires:
     - pip
-    - python
 
 about:
   home: https://github.com/pypa/build
