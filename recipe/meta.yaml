@@ -1,5 +1,5 @@
 {% set name = "python-build" %}
-{% set version = "0.10.0" %}
+{% set version = "1.2.2.post1" %}
 
 package:
   name: {{ name|lower }}
@@ -7,28 +7,26 @@ package:
 
 source:
   url: https://pypi.io/packages/source/b/build/build-{{ version }}.tar.gz
-  sha256: d5b71264afdb5951d6704482aac78de887c80691c52b88a9ad195983ca2c9269
+  sha256: b36993e92ca9375a219c99e606a122ff365a760a2d4bba0caa09bd5278b608b7
 
 build:
   number: 0
-  skip: True  # [py<37]
+  skip: True  # [py<38]
   entry_points:
     - python-build = build.__main__:entrypoint
-  script: {{ PYTHON }} -m pip install . -vv --no-deps
+  script: {{ PYTHON }} -m pip install . --no-deps --no-build-isolation --ignore-installed --no-cache-dir -vv
 
 requirements:
   host:
     - python
     - pip
-    - setuptools
-    - wheel
-    - flit-core
+    - flit-core >=3.8
   run:
     - python
     - colorama  # [win]
-    - packaging >=19.0
+    - packaging >=19.1
     - pyproject_hooks
-    - importlib-metadata >=0.22  # [py<38]
+    - importlib-metadata >=4.6  # [py<311]
     - tomli >=1.1.0  # [py<311]
 
 test:
