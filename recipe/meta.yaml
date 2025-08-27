@@ -18,11 +18,11 @@ build:
 
 requirements:
   host:
-    - python 3.9
+    - python
     - pip
     - flit-core >=3.11.0
   run:
-    - python >=3.9
+    - python
     - colorama  # [win]
     - packaging >=19.1
     - pyproject_hooks
