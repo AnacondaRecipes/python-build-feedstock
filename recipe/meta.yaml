@@ -1,28 +1,28 @@
 {% set name = "python-build" %}
-{% set version = "1.2.2.post1" %}
+{% set version = "1.3.0" %}
 
 package:
   name: {{ name|lower }}
   version: {{ version }}
 
 source:
-  url: https://pypi.io/packages/source/b/build/build-{{ version }}.tar.gz
-  sha256: b36993e92ca9375a219c99e606a122ff365a760a2d4bba0caa09bd5278b608b7
+  url: https://pypi.org/packages/source/b/build/build-{{ version }}.tar.gz
+  sha256: 698edd0ea270bde950f53aed21f3a0135672206f3911e0176261a31e0e07b397
 
 build:
   number: 0
-  skip: True  # [py<38]
   entry_points:
     - python-build = build.__main__:entrypoint
+    - pyproject-build = build.__main__:entrypoint
   script: {{ PYTHON }} -m pip install . --no-deps --no-build-isolation --ignore-installed --no-cache-dir -vv
 
 requirements:
   host:
-    - python
+    - python 3.9
     - pip
-    - flit-core >=3.8
+    - flit-core >=3.11.0
   run:
-    - python
+    - python >=3.9
     - colorama  # [win]
     - packaging >=19.1
     - pyproject_hooks
@@ -34,16 +34,18 @@ test:
     - build
   commands:
     - pip check
-    - python-build --help 
+    - python-build --help
+    - pyproject-build --help
   requires:
     - pip
+    - python >=3.9
 
 about:
   home: https://github.com/pypa/build
-  summary: A simple, correct PEP517 package builder
+  summary: A simple, correct Python build frontend
   description: |
-    build manages pyproject.toml-based builds, invoking build-backend hooks 
-    as appropriate to build a distribution package. It is a simple build tool 
+    build manages pyproject.toml-based builds, invoking build-backend hooks
+    as appropriate to build a distribution package. It is a simple build tool
     and does not perform any dependency management.
   license: MIT
   license_family: MIT
