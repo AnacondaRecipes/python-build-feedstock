@@ -41,7 +41,7 @@ test:
     - pip
 
 about:
-  home: https://github.com/pypa/build
+  home: https://build.pypa.io/
   summary: A simple, correct Python build frontend
   description: |
     build manages pyproject.toml-based builds, invoking build-backend hooks
