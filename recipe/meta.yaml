@@ -39,7 +39,6 @@ test:
     - pyproject-build --help
   requires:
     - pip
-    - python >=3.9
 
 about:
   home: https://github.com/pypa/build
