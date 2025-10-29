@@ -10,7 +10,7 @@ source:
   sha256: 698edd0ea270bde950f53aed21f3a0135672206f3911e0176261a31e0e07b397
 
 build:
-  number: 0
+  number: 1
   skip: True  # [py<39]
   entry_points:
     - python-build = build.__main__:entrypoint
@@ -33,12 +33,31 @@ requirements:
 test:
   imports:
     - build
+  source_files:
+    - tests
+    # Following files are required for some tests
+    - pyproject.toml
+    - src
+    - README.md
+    - LICENSE
   commands:
     - pip check
     - python-build --help
     - pyproject-build --help
+    # 'test_output' is flaky
+    # 'test_build_sdist' requires all files to be accessible from repo
+    - pytest -vv tests -k "not test_output and not test_build_sdist"
   requires:
     - pip
+    - flaky
+    - pytest >=6.2.4
+    - pytest-mock >=2
+    - filelock >=3
+    - wheel >=0.36.0
+    - setuptools >= 42.0.0 # [py<310]
+    - setuptools >= 56.0.0 # [py310]
+    - setuptools >= 56.0.0 # [py311]
+    - setuptools >= 67.8.0 # [py>=312]
 
 about:
   home: https://build.pypa.io/
