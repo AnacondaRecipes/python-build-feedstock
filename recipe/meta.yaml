@@ -29,8 +29,6 @@ requirements:
     - pyproject_hooks
     - importlib-metadata >=4.6  # [py<311]
     - tomli >=1.1.0  # [py<311]
-  run_constrained:
-    - uv >=0.1.18
 
 test:
   imports:
