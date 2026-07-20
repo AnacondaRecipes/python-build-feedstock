@@ -46,14 +46,17 @@ test:
     - pyproject-build --help
     # 'test_output' is flaky
     # 'test_build_sdist' requires all files to be accessible from repo
-    - pytest -vv tests -k "not test_output and not test_build_sdist"
+    # 'test_uv_install_strips_pythonpath' requires the uv package, not available in -c main
+    - pytest -vv tests -k "not test_output and not test_build_sdist and not test_uv_install_strips_pythonpath"
   requires:
     - pip
-    - flaky
     - pytest >=6.2.4
     - pytest-mock >=2
+    - pytest-rerunfailures >=9.1
     - filelock >=3
     - wheel >=0.36.0
+    - virtualenv >=20.17  # [py<314]
+    - virtualenv >=20.31  # [py>=314]
     - setuptools >= 42.0.0  # [py<310]
     - setuptools >= 56.0.0  # [py310]
     - setuptools >= 56.0.0  # [py311]
