@@ -1,17 +1,17 @@
 {% set name = "python-build" %}
-{% set version = "1.3.0" %}
+{% set version = "1.5.1" %}
 
 package:
-  name: {{ name|lower }}
+  name: {{ name }}
   version: {{ version }}
 
 source:
-  url: https://pypi.org/packages/source/b/build/build-{{ version }}.tar.gz
-  sha256: 698edd0ea270bde950f53aed21f3a0135672206f3911e0176261a31e0e07b397
+  url: https://pypi.org/packages/source/b/{{ name.split('-')[1] }}/{{ name.split('-')[1] }}-{{ version }}.tar.gz
+  sha256: 94e17f1db803ab22f46049376c44c8437c52090f0dfdf1adc43df56542d644fb
 
 build:
-  number: 1
-  skip: True  # [py<39]
+  number: 0
+  skip: true  # [py<310]
   entry_points:
     - python-build = build.__main__:entrypoint
     - pyproject-build = build.__main__:entrypoint
@@ -21,14 +21,44 @@ requirements:
   host:
     - python
     - pip
-    - flit-core >=3.11.0
+    - flit-core >=3.11
   run:
     - python
     - colorama  # [win]
-    - packaging >=19.1
+    - packaging >=24.0
     - pyproject_hooks
-    - importlib-metadata >=4.6  # [py<311]
+    - importlib-metadata >=4.6  # [py<310]
     - tomli >=1.1.0  # [py<311]
+
+# 'test_output' is flaky
+# 'test_build_sdist' requires all files to be accessible from repo
+# 'test_uv_install_strips_pythonpath' requires the uv package, not available in -c main
+{% set tests_to_skip = [
+  "test_output",
+  "test_build_sdist",
+  "test_uv_install_strips_pythonpath",
+] %}
+{% if win %}
+# build 1.5.1's symlinked venv creation fails DLL resolution when elevated on win
+{% set tests_to_skip = tests_to_skip + [
+  "test_build_package",
+  "test_build_wheel",
+  "test_build_with_dep_on_console_script",
+  "test_default_impl_install_cmd_well_formed",
+  "test_default_impl_install_files_line_endings_not_doubled",
+  "test_default_pip_is_never_too_old",
+  "test_install_dependencies_passes_keyring_env",
+  "test_logging_output",
+  "test_main_sdist_input_end_to_end",
+  "test_pip_needs_upgrade_mac_os_11",
+  "test_pythonpath_does_not_interfere_with_outer_pip",
+  "test_requirement_installation",
+  "test_venv_creation",
+  "test_verbose_logging_output",
+  "test_wheel_metadata",
+  "test_with_get_requires",
+] %}
+{% endif %}
 
 test:
   imports:
@@ -44,20 +74,19 @@ test:
     - pip check
     - python-build --help
     - pyproject-build --help
-    # 'test_output' is flaky
-    # 'test_build_sdist' requires all files to be accessible from repo
-    - pytest -vv tests -k "not test_output and not test_build_sdist"
+    - pytest -vv tests -k "not ({{ tests_to_skip | join(' or ') }})"
   requires:
     - pip
-    - flaky
     - pytest >=6.2.4
     - pytest-mock >=2
+    - pytest-rerunfailures >=10.2
     - filelock >=3
     - wheel >=0.36.0
-    - setuptools >= 42.0.0 # [py<310]
-    - setuptools >= 56.0.0 # [py310]
-    - setuptools >= 56.0.0 # [py311]
-    - setuptools >= 67.8.0 # [py>=312]
+    - virtualenv >=20.36.1
+    - setuptools >= 42.0.0  # [py<310]
+    - setuptools >= 56.0.0  # [py310]
+    - setuptools >= 56.0.0  # [py311]
+    - setuptools >= 67.8.0  # [py>=312]
 
 about:
   home: https://build.pypa.io/
