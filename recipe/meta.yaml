@@ -27,7 +27,7 @@ requirements:
     - colorama  # [win]
     - packaging >=24.0
     - pyproject_hooks
-    - importlib-metadata >=4.6  # [py<311]
+    - importlib-metadata >=4.6  # [py<310]
     - tomli >=1.1.0  # [py<311]
 
 # 'test_output' is flaky
