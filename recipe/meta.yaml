@@ -11,7 +11,7 @@ source:
 
 build:
   number: 0
-  skip: true  # [py<310]
+  skip: true  # [py<315 or py>=316]
   entry_points:
     - python-build = build.__main__:entrypoint
     - pyproject-build = build.__main__:entrypoint
