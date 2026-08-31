@@ -10,7 +10,7 @@ source:
   sha256: 94e17f1db803ab22f46049376c44c8437c52090f0dfdf1adc43df56542d644fb
 
 build:
-  number: 0
+  number: 1
   skip: true  # [py<310]
   entry_points:
     - python-build = build.__main__:entrypoint
