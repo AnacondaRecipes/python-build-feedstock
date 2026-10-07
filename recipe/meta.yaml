@@ -43,7 +43,7 @@ requirements:
   "test_uv_install_strips_pythonpath",
 ] %}
 {% if win %}
-# build 1.5.1's symlinked venv creation fails DLL resolution when elevated on win
+# build 1.6.1's symlinked venv creation fails DLL resolution when elevated on win
 {% set tests_to_skip = tests_to_skip + [
   "test_build_package",
   "test_build_wheel",
@@ -61,6 +61,7 @@ requirements:
   "test_verbose_logging_output",
   "test_wheel_metadata",
   "test_with_get_requires",
+  "test_metadata_path_legacy",
 ] %}
 {% endif %}
 
@@ -78,7 +79,9 @@ test:
     - pip check
     - python-build --help
     - pyproject-build --help
-    - pytest -vv tests -k "not ({{ tests_to_skip | join(' or ') }})"
+    # tests pased on osx, but cleanup randomly failed with 
+    # OSError: [Errno 66] Directory not empty: '/private/var/folders/bf/pytest-of-ec2-user/garbage-c32b059c/test_discovery_via_path_in_non0'
+    - pytest -vv tests -k "not ({{ tests_to_skip | join(' or ') }})"  # [not osx]
   requires:
     - pip
     - pytest >=6.2.4
