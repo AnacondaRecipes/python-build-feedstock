@@ -87,10 +87,11 @@ test:
     - filelock >=3
     - wheel >=0.36.0
     - virtualenv >=20.36.1
-    - setuptools >= 42.0.0  # [py<310]
-    - setuptools >= 56.0.0  # [py310]
-    - setuptools >= 56.0.0  # [py311]
-    - setuptools >= 67.8.0  # [py>=312]
+    # The fixture is written for older setuptools
+    - setuptools >=42.0.0,<77  # [py<310]
+    - setuptools >=56.0.0,<77  # [py310]
+    - setuptools >=56.0.0,<77  # [py311]
+    - setuptools >=67.8.0,<77  # [py>=312]
 
 about:
   home: https://build.pypa.io/
