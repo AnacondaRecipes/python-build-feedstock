@@ -41,6 +41,7 @@ requirements:
   "test_output",
   "test_build_sdist",
   "test_uv_install_strips_pythonpath",
+  "test_metadata_path_legacy",
 ] %}
 {% if win %}
 # build 1.6.1's symlinked venv creation fails DLL resolution when elevated on win
@@ -61,7 +62,6 @@ requirements:
   "test_verbose_logging_output",
   "test_wheel_metadata",
   "test_with_get_requires",
-  "test_metadata_path_legacy",
 ] %}
 {% endif %}
 
