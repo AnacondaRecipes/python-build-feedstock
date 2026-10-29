@@ -10,7 +10,7 @@ source:
   sha256: 51cc11666391ab6f092070437ac747002ff46f3e4113a3622177ee6b488bfc53
 
 build:
-  number: 0
+  number: 1
   script: {{ PYTHON }} -m pip install . --no-deps --no-build-isolation --ignore-installed --no-cache-dir -vv
   entry_points:
     # don`t remove python-build to save back-compat
@@ -94,7 +94,7 @@ test:
     - setuptools >=42.0.0,<77  # [py<310]
     - setuptools >=56.0.0,<77  # [py310]
     - setuptools >=56.0.0,<77  # [py311]
-    - setuptools >=67.8.0,<77  # [py>=312]
+    - setuptools >=67.8.0
 
 about:
   home: https://build.pypa.io/
