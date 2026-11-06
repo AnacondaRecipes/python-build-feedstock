@@ -2,15 +2,15 @@
 {% set version = "1.5.0" %}
 
 package:
-  name: {{ name|lower }}
+  name: {{ name }}
   version: {{ version }}
 
 source:
-  url: https://pypi.org/packages/source/b/build/build-{{ version }}.tar.gz
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
   sha256: 302c22c3ba2a0fd5f3911918651341ebb3896176cbdec15bd421f80b1afc7647
 
 build:
-  number: 0
+  number: 1
   skip: true  # [py<310]
   entry_points:
     - python-build = build.__main__:entrypoint
