@@ -1,16 +1,17 @@
 {% set name = "python-build" %}
+{% set pypi_name = "build" %}
 {% set version = "1.5.0" %}
 
 package:
-  name: {{ name|lower }}
+  name: {{ name }}
   version: {{ version }}
 
 source:
-  url: https://pypi.org/packages/source/b/build/build-{{ version }}.tar.gz
+  url: https://pypi.org/packages/source/{{ pypi_name[0] }}/{{ pypi_name }}/{{ pypi_name }}-{{ version }}.tar.gz
   sha256: 302c22c3ba2a0fd5f3911918651341ebb3896176cbdec15bd421f80b1afc7647
 
 build:
-  number: 0
+  number: 1
   skip: true  # [py<310]
   entry_points:
     - python-build = build.__main__:entrypoint
@@ -32,6 +33,13 @@ requirements:
   run_constrained:
     - uv >=0.1.18
 
+# Requires repository files not included in the conda test environment.
+{% set deselected_tests = "--deselect=tests/test_self_packaging.py::test_build_sdist" %}
+# Requires uv, which is not available in the Anaconda main channel.
+{% set deselected_tests = deselected_tests + " --deselect=tests/test_env.py::test_uv_install_strips_pythonpath" %}
+# Legacy license classifiers trigger an error with newer setuptools.
+{% set deselected_tests = deselected_tests + " --deselect=tests/test_projectbuilder.py::test_metadata_path_legacy" %}
+
 test:
   imports:
     - build
@@ -46,16 +54,16 @@ test:
     - pip check
     - python-build --help
     - pyproject-build --help
-    # 'test_output' is flaky
-    # 'test_build_sdist' requires all files to be accessible from repo
-    - pytest -vv tests -k "not test_output and not test_build_sdist"
+    - pytest -vv tests {{ deselected_tests }}
   requires:
     - pip
-    - flaky
+    - pytest-rerunfailures >=9.1
     - pytest >=6.2.4
     - pytest-mock >=2
     - filelock >=3
     - wheel >=0.36.0
+    - virtualenv >=20.17  # [py<314]
+    - virtualenv >=20.31  # [py>=314]
     - setuptools >= 42.0.0  # [py<310]
     - setuptools >= 56.0.0  # [py310]
     - setuptools >= 56.0.0  # [py311]
